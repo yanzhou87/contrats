@@ -6,12 +6,16 @@ import {useEffect, useState} from "react";
 
 function App() {
     const [utilisateur, setUtilisateur] = useState([])
+    const [estLogin, setEstLogin] = useState(false)
 
-    const fetchUtilisateur = async (utilisateur) => {
-        console.log("utilisateur : " + utilisateur.nom)
-        const res = await fetch(`http://localhost:8080/utilisateur/${utilisateur}`)
+    const fetchUtilisateur = async (u) => {
+        console.log("utilisateur : " + u.nom)
+        const res = await fetch(`http://localhost:8080/utilisateur/${u.nom}`)
         const data = await res.json()
         setUtilisateur(data)
+        if (utilisateur.motDePasse === u.motDePasse){
+           setEstLogin(true)
+        }
         return data
     }
 
@@ -19,7 +23,7 @@ function App() {
       <Router>
           <div>
               <Routes>
-                  <Route exact path='/' element={<PageLogin fechUtilisateur={fetchUtilisateur}/>}/>
+                  <Route exact path='/' element={<PageLogin fechUtilisateur={fetchUtilisateur} estLogin={estLogin} />}/>
               </Routes>
           </div>
       </Router>

@@ -4,10 +4,13 @@ import Button from "../Button";
 import {Link} from "react-router-dom";
 import {useState} from "react";
 
-const PageLogin = ({fechUtilisateur}) => {
+const PageLogin = ({fechUtilisateur, estLogin}) => {
     const [userName, setUserName] = useState('')
     const [motDePasse, setMotDePasse] = useState('')
-    console.log(userName)
+    console.log(estLogin)
+    if (estLogin){
+        //return <pageMenu />;
+    }
     return (
 
             <div>
@@ -18,6 +21,7 @@ const PageLogin = ({fechUtilisateur}) => {
                 </form>
                 <Link to={`/ajouterUtilisateur`}><Button text={'Créer un compte'} color={"pink"}/></Link>
                 <Button text={"Connexion"} onClick={()=>fechUtilisateur({nom : userName, motDePasse : motDePasse})}/>
+
             </div>
 
     )

@@ -2,7 +2,9 @@ package gerer.contrats;
 
 import gerer.contrats.forms.ContratDTO;
 import gerer.contrats.model.Contrat;
+import gerer.contrats.model.Utilisateur;
 import gerer.contrats.service.ServiceContrat;
+import gerer.contrats.service.ServiceUtilisateur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,7 +18,7 @@ public class GestionContratApplication implements CommandLineRunner {
 
     @Autowired
     private ServiceContrat serviceContrat;
-
+    private ServiceUtilisateur serviceUtilisateur;
     public static void main(String[] args) {
         SpringApplication.run(GestionContratApplication.class, args);
     }
@@ -35,5 +37,6 @@ public class GestionContratApplication implements CommandLineRunner {
         List<ContratDTO> contratDTOS = serviceContrat.getContratsParNom("Yan Zhou");
 
         System.out.println(serviceContrat.getAllContrats());
+
     }
 }

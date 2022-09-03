@@ -22,6 +22,10 @@ public class Contrat {
     private LocalDate dateFin;
     private float montant;
 
+    @ManyToOne
+    @JoinColumn(name = "UTILISATEUR_ID")
+    private Utilisateur utilisateur;
+
     public Contrat(String nom, LocalDate dateDebut, LocalDate dateFin, float montant) {
         this.nom = nom;
         this.dateDebut = dateDebut;
