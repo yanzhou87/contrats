@@ -60,7 +60,7 @@ const AjouterUtilisateur = ({onAjouter}) => {
                        onChange={(e) => setVerifierMotDePasse(e.target.value)}/>
             </div>
             <input type='submit' value='Créer compte' className='btn btn-block'/>
-            <Link to='/'><Button color={'red'} text={'Exit'}/></Link>
+            <Link to='/'><Button color={'red'} text={'Retourne'}/></Link>
         </form>
     )
 }
