@@ -3,6 +3,7 @@ package gerer.contrats.service;
 import gerer.contrats.forms.ContratDTO;
 import gerer.contrats.model.Contrat;
 import gerer.contrats.repository.ContratRepository;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

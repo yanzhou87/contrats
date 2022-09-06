@@ -19,6 +19,7 @@ public class GestionContratApplication implements CommandLineRunner {
     @Autowired
     private ServiceContrat serviceContrat;
     private ServiceUtilisateur serviceUtilisateur;
+
     public static void main(String[] args) {
         SpringApplication.run(GestionContratApplication.class, args);
     }
@@ -37,6 +38,7 @@ public class GestionContratApplication implements CommandLineRunner {
         List<ContratDTO> contratDTOS = serviceContrat.getContratsParNom("Yan Zhou");
 
         System.out.println(serviceContrat.getAllContrats());
+
 
     }
 }

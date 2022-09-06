@@ -2,7 +2,6 @@ package gerer.contrats.controllers;
 
 import gerer.contrats.forms.ContratDTO;
 import gerer.contrats.forms.UtilisateurDTO;
-import gerer.contrats.model.Utilisateur;
 import gerer.contrats.service.ServiceContrat;
 import gerer.contrats.service.ServiceUtilisateur;
 import org.slf4j.Logger;
@@ -19,6 +18,7 @@ import java.util.List;
 public class ContratController {
 
     Logger logger = LoggerFactory.getLogger(ContratController.class);
+
     private ServiceContrat serviceContrat;
     private ServiceUtilisateur serviceUtilisateur;
 
@@ -37,8 +37,24 @@ public class ContratController {
         return new ResponseEntity<>(serviceContrat.getContratsParNom(nomClient), HttpStatus.OK);
     }
 
-    @GetMapping("/utilisateur/${nomutilisateur}")
-    public ResponseEntity<UtilisateurDTO> getUtilisateurParNom(@PathVariable String nomutilisateur) {
-        return new ResponseEntity<>(serviceUtilisateur.getUtilisateurParNom(nomutilisateur), HttpStatus.OK);
+    @GetMapping("/utilisateurs/{nom}")
+    public ResponseEntity<UtilisateurDTO> getUtilisateurParNom(@PathVariable String nom) {
+        System.out.println("get utli par nom");
+        return new ResponseEntity<>(serviceUtilisateur.getUtilisateurParNom(nom), HttpStatus.OK);
+    }
+
+    @GetMapping("/utilisateurs")
+    public ResponseEntity<List<UtilisateurDTO>> getAllContratParClient() {
+        System.out.println("get utlisateurs");
+        return new ResponseEntity<>(serviceUtilisateur.getAllUtlisateurs(), HttpStatus.OK);
+    }
+    @PostMapping("/utilisateurs")
+    public ResponseEntity<UtilisateurDTO> ajouterUtilisateur(@RequestBody UtilisateurDTO utilisateurDTO) {
+        System.out.println("post : " + utilisateurDTO);
+        if(!serviceUtilisateur.verifierUnique(utilisateurDTO.getNom(),utilisateurDTO.getCourriel())){
+            System.out.println("valide courriel : " + HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(serviceUtilisateur.saveUtilisateur(utilisateurDTO), HttpStatus.CREATED);
     }
 }
