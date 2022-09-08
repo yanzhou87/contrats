@@ -25,13 +25,19 @@ const PageLogin = ({fetchUtilisateur, estLogin}) => {
             <div>
                 <form className='add-form' onSubmit={onSubmit}>
                     <Header title={'Gestion les contrats'} position={'center'}/>
-                    <input type="text" placeholder={'nom'} onChange={(e) => setUserName(e.target.value)} required/>
-                    <input type="text" placeholder={'motDePasse'} onChange={(e) => setMotDePasse(e.target.value)}required/>
-                    <input type='submit' value='Connexion' className='btn btn-block'/>
-                </form>
-                <Link to={`/ajouterUtilisateur`}><Button text={'Créer un compte'} color={"pink"}/></Link>
+                    <div>
+                        <label>Nom : </label>
+                        <input type="text" placeholder={'nom'} onChange={(e) => setUserName(e.target.value)} required/>
+                    </div>
+                    <div>
+                        <label>Mot de passe : </label>
+                        <input type="text" placeholder={'motDePasse'} onChange={(e) => setMotDePasse(e.target.value)}required/>
+                    </div>
 
-                <Button text={"Connexion"} onclick={()=>{fetchUtilisateur({nom : userName, motDePasse : motDePasse})}}/>
+                    <input type='submit' value='Connexion' className='btn btn-block'/>
+                    <Link to={`/ajouterUtilisateur`}><Button text={'Créer un compte'} color={"pink"}/></Link>
+                </form>
+
             </div>
 
     )
