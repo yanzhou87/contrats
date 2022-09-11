@@ -18,7 +18,9 @@ public class ServiceUtilisateur {
     }
 
     public UtilisateurDTO getUtilisateurParNom(String nom) {
+        System.out.println("nom " + nom );
         Utilisateur utilisateur = utilisateurRepository.findUtilisateurByNom(nom).get(0);
+        System.out.println("utilisateur : " + utilisateur);
         UtilisateurDTO utilisateurDTO = new UtilisateurDTO(utilisateur.getId(),utilisateur.getNom(),
                 utilisateur.getMotDePasse(),utilisateur.getCourriel());
        return utilisateurDTO;

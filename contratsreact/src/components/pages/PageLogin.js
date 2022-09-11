@@ -2,10 +2,13 @@ import PropTypes from 'prop-types'
 import Header from "../Header";
 import Button from "../Button";
 import {Link, useParams} from "react-router-dom";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
-const PageLogin = ({fetchUtilisateur, estLogin}) => {
+const PageLogin = ({fetchUtilisateur, estLogin, setSuccesInscription}) => {
 
+    useEffect(()=>{
+        setSuccesInscription(false)
+    })
     const [userName, setUserName] = useState('')
     const [motDePasse, setMotDePasse] = useState('')
     console.log(estLogin)
@@ -21,7 +24,6 @@ const PageLogin = ({fetchUtilisateur, estLogin}) => {
         console.log("login")
     }
     return (
-
             <div>
                 <form className='add-form' onSubmit={onSubmit}>
                     <Header title={'Gestion les contrats'} position={'center'}/>
@@ -34,17 +36,16 @@ const PageLogin = ({fetchUtilisateur, estLogin}) => {
                         <input type="text" placeholder={'motDePasse'} onChange={(e) => setMotDePasse(e.target.value)}required/>
                     </div>
 
-                    <input type='submit' value='Connexion' className='btn btn-block'/>
+                    <input type='submit' value='Connexion' className='btn btn-block' />
                     <Link to={`/ajouterUtilisateur`}><Button text={'Créer un compte'} color={"pink"}/></Link>
                 </form>
-
             </div>
-
     )
 }
 
 PageLogin.propTypes = {
     fechUtilisateur: PropTypes.func,
+    setSuccesInscription: PropTypes.func,
 }
 
 export default PageLogin

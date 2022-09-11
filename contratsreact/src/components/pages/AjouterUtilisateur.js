@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import Button from "../Button";
 
-const AjouterUtilisateur = ({onAjouter}) => {
+const AjouterUtilisateur = ({onAjouter, succesInscription}) => {
     const [nom, setNom] = useState('')
     const [courriel, setCourriel] = useState('')
     const [motDePasse, setMotDePasse] = useState('')
@@ -30,38 +30,49 @@ const AjouterUtilisateur = ({onAjouter}) => {
         setCourriel('')
         setMotDePasse('')
         setVerifierMotDePasse('')
+
     }
 
     return (
+        <div>
+            {
+                succesInscription ?
+                    <div>
+                        <div>Bravo !!! Succès Inscription</div>
+                        <Link to='/'><Button text={'Connexion'} color={"pink"}/></Link>
+                    </div>
+                    :
+                    <form className='add-form' onSubmit={onSubmit}>
+                        <div className='form-control'>
+                            <label>Nom</label>
+                            <input type='text' placeholder='nom utilisateur'
+                                   value={nom}
+                                   onChange={(e) => setNom(e.target.value)}/>
+                        </div>
+                        <div className='form-control'>
+                            <label>Courriel</label>
+                            <input type='email' placeholder='Courreil'
+                                   value={courriel}
+                                   onChange={(e) => setCourriel(e.target.value)}/>
+                        </div>
+                        <div className='form-control'>
+                            <label>Mot de passe</label>
+                            <input type='text' placeholder='Mot De Passe'
+                                   value={motDePasse}
+                                   onChange={(e) => setMotDePasse(e.target.value)}/>
+                        </div>
+                        <div className='form-control'>
+                            <label>Vérifier votre mot de passe</label>
+                            <input type='text' placeholder='Vérifier Mot De Passe'
+                                   value={verifierMotDePasse}
+                                   onChange={(e) => setVerifierMotDePasse(e.target.value)}/>
+                        </div>
+                        <input type='submit' value='Créer compte' className='btn btn-block'/>
+                        <Link to='/'><Button color={'red'} text={'Retourne'}/></Link>
+                    </form>
+            }
+        </div>
 
-        <form className='add-form' onSubmit={onSubmit}>
-            <div className='form-control'>
-                <label>Nom</label>
-                <input type='text' placeholder='nom utilisateur'
-                       value={nom}
-                       onChange={(e) => setNom(e.target.value)}/>
-            </div>
-            <div className='form-control'>
-                <label>Courriel</label>
-                <input type='email' placeholder='Courreil'
-                       value={courriel}
-                       onChange={(e) => setCourriel(e.target.value)}/>
-            </div>
-            <div className='form-control'>
-                <label>Mot de passe</label>
-                <input type='text' placeholder='Mot De Passe'
-                       value={motDePasse}
-                       onChange={(e) => setMotDePasse(e.target.value)}/>
-            </div>
-            <div className='form-control'>
-                <label>Vérifier votre mot de passe</label>
-                <input type='text' placeholder='Vérifier Mot De Passe'
-                       value={verifierMotDePasse}
-                       onChange={(e) => setVerifierMotDePasse(e.target.value)}/>
-            </div>
-            <input type='submit' value='Créer compte' className='btn btn-block'/>
-            <Link to='/'><Button color={'red'} text={'Retourne'}/></Link>
-        </form>
     )
 }
 AjouterUtilisateur.propTypes = {

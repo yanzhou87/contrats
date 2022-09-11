@@ -9,6 +9,7 @@ function App() {
     const [utilisateur, setUtilisateur] = useState([])
     const [utilisateurs, setUtilisateurs] = useState([])
     const [estLogin, setEstLogin] = useState(false)
+    const [succesInscription, setSuccesInscription] = useState(false)
 
     useEffect(() => {
         const getUtilisateurs = async () => {
@@ -50,6 +51,7 @@ function App() {
             alert("Le nom ou le courriel existent")
         }
         if(res.status === 201){
+            setSuccesInscription(true)
             const data = await res.json();
             setUtilisateurs([...utilisateurs, data])
         }
@@ -59,13 +61,11 @@ function App() {
       <Router>
           <div>
               <Routes>
-                  <Route exact path='/' element={<PageLogin fetchUtilisateur={fetchUtilisateur} estLogin={estLogin} />}/>
-                  <Route exact path='/ajouterUtilisateur' element={<AjouterUtilisateur onAjouter={ajouterCompte} />}/>
+                  <Route exact path='/' element={<PageLogin fetchUtilisateur={fetchUtilisateur} estLogin={estLogin} setSuccesInscription={setSuccesInscription}/> }/>
+                  <Route exact path='/ajouterUtilisateur' element={<AjouterUtilisateur onAjouter={ajouterCompte} succesInscription={succesInscription} />}/>
               </Routes>
           </div>
       </Router>
-
-
   );
 }
 
