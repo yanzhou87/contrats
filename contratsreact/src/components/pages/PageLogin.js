@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import Header from "../Header";
-import {Button, Input, Link} from '@chakra-ui/react'
+import {Button, Input, Link, Text} from '@chakra-ui/react'
 import {useEffect, useState} from "react";
 import {Box} from '@chakra-ui/react'
 import {
@@ -22,6 +22,7 @@ const PageLogin = ({fetchUtilisateur, estLogin, setSuccesInscription}) => {
 
     const estErreurPourMotDePasse = motDePasse === ''
     const estErreurPourNom = userName === ''
+
     const onSubmit = (e) => {
         e.preventDefault()
 
@@ -33,38 +34,42 @@ const PageLogin = ({fetchUtilisateur, estLogin, setSuccesInscription}) => {
         console.log("login")
     }
     return (
-            <Box bg = 'LightBlue'  color='white' m={5} width={500} height={400}>
-                <Header title={'Gestion les contrats'} position={'center'}/>
+        <Box>
+            <Text fontSize='6xl' align="center" >Gestion les contrats</Text>
 
-                    <form onSubmit={onSubmit}>
-                        <FormControl  isInvalid={estErreurPourNom} isRequired>
-                            <FormLabel m={3}>Nom : </FormLabel>
-                            <Input width={400} m={3} type="text" placeholder={'nom'} value={userName} onChange={traiterInputChangeNom}/>
-                            {estErreurPourNom ? (
-                                <FormHelperText m={3}>
-                                    Le mot ne peut pas être vide
-                                </FormHelperText>
-                            ) : (
-                                <FormHelperText m={3}></FormHelperText>
-                            )}
-                        </FormControl>
-                        <FormControl isInvalid={estErreurPourMotDePasse} isRequired>
-                            <FormLabel m={3}>Mot de passe :</FormLabel>
-                            <Input width={400} m={3} type="text" placeholder={'motDePasse'} value={motDePasse} onChange={traiterInputChangeMotDePasse}/>
-                            {estErreurPourMotDePasse ? (
-                                <FormHelperText m={3}>
-                                    Le mot de passe ne peut pas être vide
-                                </FormHelperText>
-                            ) : (
-                                <FormHelperText m={3}></FormHelperText>
-                            )}
+            <Box bg = 'LightBlue'  color='white' m='auto' mt='5' p='1' width={500} height={400} borderRadius='15'>
 
-                        </FormControl>
-                        <input m={3} type='submit' value='Connexion' className='btn btn-block' />
-                        <Link href='http://localhost:3000/ajouterUtilisateur' m={3}><Button bg='black' m='5'>Créer mon compte</Button></Link>
-                    </form>
+                <form onSubmit={onSubmit}>
+                    <FormControl  isInvalid={estErreurPourNom} isRequired >
+                        <FormLabel m={3}>Nom : </FormLabel>
+                        <Input width={400} m={3} type="text" placeholder={'nom'} value={userName} onChange={traiterInputChangeNom}/>
+                        {estErreurPourNom ? (
+                            <FormHelperText m={3} color='red'>
+                                Le mot ne peut pas être vide
+                            </FormHelperText>
+                        ) : (
+                            <FormHelperText m={3}></FormHelperText>
+                        )}
+                    </FormControl>
+                    <FormControl isInvalid={estErreurPourMotDePasse} isRequired>
+                        <FormLabel m={3}>Mot de passe :</FormLabel>
+                        <Input width={400} m={3} type="text" placeholder={'motDePasse'} value={motDePasse} onChange={traiterInputChangeMotDePasse}/>
+                        {estErreurPourMotDePasse ? (
+                            <FormHelperText m={3} color='red'>
+                                Le mot de passe ne peut pas être vide
+                            </FormHelperText>
+                        ) : (
+                            <FormHelperText m={3}></FormHelperText>
+                        )}
+
+                    </FormControl>
+                    <Input width={200} m={3} bg='pink' type='submit' value='Connexion' className='btn btn-block' />
+                    <Link href='http://localhost:3000/ajouterUtilisateur' m={3}><Button bg='black' m='5' width={200}>Créer mon compte</Button></Link>
+                </form>
 
             </Box>
+        </Box>
+
     )
 }
 
