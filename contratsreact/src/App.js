@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import PageLogin from "./components/pages/PageLogin";
 import {useEffect, useState} from "react";
 import AjouterUtilisateur from "./components/pages/AjouterUtilisateur";
+import { ChakraProvider } from '@chakra-ui/react'
 
 function App() {
     const [utilisateur, setUtilisateur] = useState([])
@@ -58,14 +59,17 @@ function App() {
     }
 
     return (
-      <Router>
-          <div>
-              <Routes>
-                  <Route exact path='/' element={<PageLogin fetchUtilisateur={fetchUtilisateur} estLogin={estLogin} setSuccesInscription={setSuccesInscription}/> }/>
-                  <Route exact path='/ajouterUtilisateur' element={<AjouterUtilisateur onAjouter={ajouterCompte} succesInscription={succesInscription} />}/>
-              </Routes>
-          </div>
-      </Router>
+        <ChakraProvider>
+            <Router>
+                <div>
+                    <Routes>
+                        <Route exact path='/' element={<PageLogin fetchUtilisateur={fetchUtilisateur} estLogin={estLogin} setSuccesInscription={setSuccesInscription}/> }/>
+                        <Route exact path='/ajouterUtilisateur' element={<AjouterUtilisateur onAjouter={ajouterCompte} succesInscription={succesInscription} />}/>
+                    </Routes>
+                </div>
+            </Router>
+        </ChakraProvider>
+
   );
 }
 

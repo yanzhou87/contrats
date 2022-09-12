@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
-import Button from "../Button";
+import {Button} from "@chakra-ui/react";
 
 const AjouterUtilisateur = ({onAjouter, succesInscription}) => {
     const [nom, setNom] = useState('')
