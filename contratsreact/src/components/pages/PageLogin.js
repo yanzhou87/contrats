@@ -1,24 +1,18 @@
 import PropTypes from 'prop-types'
-import Header from "../Header";
-import {Button, Input, Link, Text} from '@chakra-ui/react'
+
 import {useEffect, useState} from "react";
 import {Box} from '@chakra-ui/react'
-import {
-    FormControl,
-    FormLabel,
-    FormHelperText,
-} from '@chakra-ui/react'
+import {Button, Input, Link, Text, FormControl, FormLabel, FormHelperText,} from '@chakra-ui/react'
 
-const PageLogin = ({fetchUtilisateur, estLogin, setSuccesInscription}) => {
+const PageLogin = ({fetchUtilisateur, estLogin, setSuccesInscription, estErreurPourMauvaisMotDePasse}) => {
 
     useEffect(()=>{
         setSuccesInscription(false)
     })
     const [userName, setUserName] = useState('')
-    const traiterInputChangeNom = (e) => setUserName(e.target.value)
     const [motDePasse, setMotDePasse] = useState('')
+    const traiterInputChangeNom = (e) => setUserName(e.target.value)
     const traiterInputChangeMotDePasse = (e) => setMotDePasse(e.target.value)
-    console.log(estLogin)
 
     const estErreurPourMotDePasse = motDePasse === ''
     const estErreurPourNom = userName === ''
@@ -31,11 +25,14 @@ const PageLogin = ({fetchUtilisateur, estLogin, setSuccesInscription}) => {
     }
 
     if (estLogin){
-        console.log("login")
+       // location.assign("localhost:3000/contrats")
     }
     return (
         <Box>
-            <Text fontSize='6xl' align="center" >Gestion les contrats</Text>
+            {
+
+            }
+            <Text fontSize='6xl' align="center">Gestion les contrats</Text>
 
             <Box bg = 'LightBlue'  color='white' m='auto' mt='5' p='1' width={500} height={400} borderRadius='15'>
 
@@ -61,10 +58,23 @@ const PageLogin = ({fetchUtilisateur, estLogin, setSuccesInscription}) => {
                         ) : (
                             <FormHelperText m={3}></FormHelperText>
                         )}
-
+                        {estErreurPourMauvaisMotDePasse ? (
+                            <FormHelperText m={3} color='red'>
+                                Mauvais mot de passe
+                            </FormHelperText>
+                        ) : (
+                            <FormHelperText m={3}></FormHelperText>
+                        )}
+                        {estLogin ? (
+                            <FormHelperText m={3} color='green'>
+                                Login
+                            </FormHelperText>
+                        ) : (
+                            <FormHelperText m={3}></FormHelperText>
+                        )}
                     </FormControl>
-                    <Input width={200} m={3} bg='pink' type='submit' value='Connexion' className='btn btn-block' />
-                    <Link href='http://localhost:3000/ajouterUtilisateur' m={3}><Button bg='black' m='5' width={200}>Créer mon compte</Button></Link>
+                    <Input width={200} m={3} bg='pink' type='submit' value='Connexion'/>
+                    <Link href='http://localhost:3000/ajouterUtilisateur' m={3}><Button bg='black' m='5' width={200} >Créer mon compte</Button></Link>
                 </form>
 
             </Box>
