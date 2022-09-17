@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import {Box} from '@chakra-ui/react'
 import {Button, Input, Link, Text, FormControl, FormLabel, FormHelperText,} from '@chakra-ui/react'
 
-const PageLogin = ({fetchUtilisateur, estLogin, setSuccesInscription, estErreurPourMauvaisMotDePasse}) => {
+const PageLogin = ({fetchUtilisateur, estLogin, setSuccesInscription, estErreurPourMauvaisMotDePasse, compteExistePas}) => {
 
     useEffect(()=>{
         setSuccesInscription(false)
@@ -19,19 +19,14 @@ const PageLogin = ({fetchUtilisateur, estLogin, setSuccesInscription, estErreurP
 
     const onSubmit = (e) => {
         e.preventDefault()
-
         fetchUtilisateur({nom : userName, motDePasse : motDePasse})
-
     }
 
     if (estLogin){
-       // location.assign("localhost:3000/contrats")
+        window.location.assign("http://localhost:3000/utilisateurs/"+userName)
     }
     return (
         <Box>
-            {
-
-            }
             <Text fontSize='6xl' align="center">Gestion les contrats</Text>
 
             <Box bg = 'LightBlue'  color='white' m='auto' mt='5' p='1' width={500} height={400} borderRadius='15'>
@@ -40,6 +35,13 @@ const PageLogin = ({fetchUtilisateur, estLogin, setSuccesInscription, estErreurP
                     <FormControl  isInvalid={estErreurPourNom} isRequired >
                         <FormLabel m={3}>Nom : </FormLabel>
                         <Input width={400} m={3} type="text" placeholder={'nom'} value={userName} onChange={traiterInputChangeNom}/>
+                        {compteExistePas ? (
+                            <FormHelperText m={3} color='red'>
+                                Compte existe pas .
+                            </FormHelperText>
+                        ) : (
+                            <FormHelperText m={3}></FormHelperText>
+                        )}
                         {estErreurPourNom ? (
                             <FormHelperText m={3} color='red'>
                                 Le mot ne peut pas être vide
@@ -79,7 +81,6 @@ const PageLogin = ({fetchUtilisateur, estLogin, setSuccesInscription, estErreurP
 
             </Box>
         </Box>
-
     )
 }
 

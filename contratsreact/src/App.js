@@ -5,8 +5,7 @@ import PageLogin from "./components/pages/PageLogin";
 import {useEffect, useState} from "react";
 import AjouterUtilisateur from "./components/pages/AjouterUtilisateur";
 import { ChakraProvider } from '@chakra-ui/react'
-
-import { useBoolean } from '@chakra-ui/react'
+import PageMenu from "./components/pages/PageMenu";
 
 function App() {
     const [utilisateur, setUtilisateur] = useState([])
@@ -15,6 +14,7 @@ function App() {
     const [succesInscription, setSuccesInscription] = useState(false)
     const [estErreurPourMauvaisMotDePasse, setEstErreurPourMauvaisMotDePasse] = useState(false)
     const [nomOuCourrielExistent, setNomOuCourrielExistent] = useState(false)
+    const [compteExistePas, setCompteExistePas] = useState(false)
 
     useEffect(() => {
         const getUtilisateurs = async () => {
@@ -33,9 +33,12 @@ function App() {
     const fetchUtilisateur = async (u) => {
         const res = await fetch(`http://localhost:8080/utilisateurs/${u.nom}`)
         const data = await res.json()
-        setUtilisateur(data)
-        if (data.motDePasse === u.motDePasse){
+
+        if(res.status === 500){
+            setCompteExistePas(true)
+        }else if (data.motDePasse === u.motDePasse){
             setEstLogin(true)
+            setCompteExistePas(false)
         }
         else
             setEstErreurPourMauvaisMotDePasse(true)
@@ -70,8 +73,10 @@ function App() {
             <Router>
                 <div>
                     <Routes>
-                        <Route exact path='/' element={<PageLogin fetchUtilisateur={fetchUtilisateur} estLogin={estLogin} setSuccesInscription={setSuccesInscription} estErreurPourMauvaisMotDePasse={estErreurPourMauvaisMotDePasse}/> }/>
+                        <Route exact path='/' element={<PageLogin fetchUtilisateur={fetchUtilisateur} estLogin={estLogin} setSuccesInscription={setSuccesInscription} estErreurPourMauvaisMotDePasse={estErreurPourMauvaisMotDePasse} compteExistePas={compteExistePas}/> }/>
                         <Route exact path='/ajouterUtilisateur' element={<AjouterUtilisateur onAjouter={ajouterCompte} succesInscription={succesInscription} nomOuCourrielExistent={nomOuCourrielExistent}/>}/>
+                        <Route exact path='/utilisateurs/:nom' element={<PageMenu />}/>
+
                     </Routes>
                 </div>
             </Router>
