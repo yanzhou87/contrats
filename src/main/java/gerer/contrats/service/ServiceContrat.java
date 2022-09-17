@@ -29,21 +29,35 @@ public class ServiceContrat {
         System.out.println(contrats);
         for(Contrat c : contrats){
             ContratDTO contratDTO = new ContratDTO(c.getId(),c.getNom(),
-                    c.getDateDebut().toString(),c.getDateFin().toString(),c.getMontant());
+                    c.getDateDebut().toString(),c.getDateFin().toString(), c.getNomClient(), c.getMontant());
             contratDTOs.add(contratDTO);
         }
         System.out.println("------" +contratDTOs);
         return contratDTOs;
     }
-    public List<ContratDTO> getContratsParNom(String nom){
-        List<Contrat[]> contratsParNom = contratRepository.findContratBySeach(nom);
+
+    public List<ContratDTO> getContratsParNomUtilisateur(String nom){
+        System.out.println("getContratsParNomUtilisateur : " + nom);
+
+        List<ContratDTO> contrats = getAllContrats();
         List<ContratDTO> contratDTOs = new ArrayList<>();
-        for(Contrat[] contrats : contratsParNom){
-            ContratDTO contratDTO = new ContratDTO(contrats[0].getId(),contrats[0].getNom(),
-                    contrats[0].getDateDebut().toString(),contrats[0].getDateFin().toString(),contrats[0].getMontant());
-            contratDTOs.add(contratDTO);
+        for(ContratDTO contratDTO : contrats){
+            if (contratDTO.getNom().equals(nom)){
+                contratDTOs.add(contratDTO);
+            }
         }
-        contratDTOs.sort(Comparator.comparing(ContratDTO::getId));
+
+        contratDTOs.sort(Comparator.comparing(ContratDTO::getDateFin));
+        System.out.println("fin get :" + contratDTOs);
         return contratDTOs;
+    }
+    public List<ContratDTO> getContratsParNomUtilisateurEtNomClient(String nom, String nomClient) {
+        List<ContratDTO> listResultat = new ArrayList<>();
+        List<Contrat> contratList = contratRepository.findContratsParNomClient(nom, nomClient);
+        for(Contrat c : contratList){
+            ContratDTO contratDTO = new ContratDTO(c.getId(),c.getNom(),c.getDateDebut().toString(),c.getDateFin().toString(),c.getNomClient(),c.getMontant());
+            listResultat.add(contratDTO);
+        }
+        return listResultat;
     }
 }

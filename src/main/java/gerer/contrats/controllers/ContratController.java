@@ -32,22 +32,26 @@ public class ContratController {
         return new ResponseEntity<>(serviceContrat.getAllContrats(), HttpStatus.OK);
     }
 
-    @GetMapping("/{nomClient}/listeContrat")
-    public ResponseEntity<List<ContratDTO>> getAllContratParClient(@PathVariable String nomClient) {
-        return new ResponseEntity<>(serviceContrat.getContratsParNom(nomClient), HttpStatus.OK);
+    @GetMapping("/utilisateurs/{nom}/contrats")
+    public ResponseEntity<List<ContratDTO>> getAllContratParNomUtilisateur(@PathVariable String nom) {
+
+        System.out.println("nom getAllcontrats" +serviceContrat.getContratsParNomUtilisateur(nom));
+        return new ResponseEntity<>(serviceContrat.getContratsParNomUtilisateur(nom), HttpStatus.OK);
+    }
+    @GetMapping("/utilisateurs/{nom}/contrats/{nomClient}")
+    public ResponseEntity<List<ContratDTO>> getAllContratParNomUtilisateurEtNomClient(@PathVariable String nom, @PathVariable String nomClient) {
+        return new ResponseEntity<>(serviceContrat.getContratsParNomUtilisateurEtNomClient(nom, nomClient), HttpStatus.OK);
     }
 
     @GetMapping("/utilisateurs/{nom}")
     public ResponseEntity<UtilisateurDTO> getUtilisateurParNom(@PathVariable String nom) {
-        System.out.println("get utli par nom");
-        return new ResponseEntity<>(serviceUtilisateur.getUtilisateurParNom(nom), HttpStatus.OK);
+        System.out.println("get utli par nom" + serviceUtilisateur.getUtilisateurParNom(nom).get());
+        return serviceUtilisateur.getUtilisateurParNom(nom)
+                .map(utilisateur -> ResponseEntity.status(HttpStatus.OK).body(utilisateur))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+        //return new ResponseEntity<>(serviceUtilisateur.getUtilisateurParNom(nom), HttpStatus.OK);
     }
 
-    @GetMapping("/utilisateurs")
-    public ResponseEntity<List<UtilisateurDTO>> getAllContratParClient() {
-        System.out.println("get utlisateurs");
-        return new ResponseEntity<>(serviceUtilisateur.getAllUtlisateurs(), HttpStatus.OK);
-    }
     @PostMapping("/utilisateurs")
     public ResponseEntity<UtilisateurDTO> ajouterUtilisateur(@RequestBody UtilisateurDTO utilisateurDTO) {
         System.out.println("post : " + utilisateurDTO);

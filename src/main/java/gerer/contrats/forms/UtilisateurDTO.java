@@ -14,4 +14,10 @@ public class UtilisateurDTO {
     private String motDePasse;
     private String courriel;
 
+    public UtilisateurDTO(String nom, String motDePasse, String courriel) {
+        this.nom = nom;
+        this.motDePasse = motDePasse;
+        this.courriel = courriel;
+    }
+
 }

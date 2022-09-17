@@ -22,14 +22,28 @@ public class Contrat {
     private LocalDate dateFin;
     private float montant;
 
+    private String nomClient;
+
     @ManyToOne
     @JoinColumn(name = "UTILISATEUR_ID")
     private Utilisateur utilisateur;
 
-    public Contrat(String nom, LocalDate dateDebut, LocalDate dateFin, float montant) {
+    public Contrat(String nom, LocalDate dateDebut, LocalDate dateFin, float montant ,String nomClient) {
         this.nom = nom;
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
         this.montant = montant;
+        this.nomClient = nomClient;
+    }
+
+    @Override
+    public String toString() {
+        return "Contrat{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", dateDebut=" + dateDebut +
+                ", dateFin=" + dateFin +
+                ", montant=" + montant +
+                '}';
     }
 }

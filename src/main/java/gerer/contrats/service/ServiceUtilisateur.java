@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ServiceUtilisateur {
@@ -17,13 +18,11 @@ public class ServiceUtilisateur {
         this.utilisateurRepository = utilisateurRepository;
     }
 
-    public UtilisateurDTO getUtilisateurParNom(String nom) {
-        System.out.println("nom " + nom );
-        Utilisateur utilisateur = utilisateurRepository.findUtilisateurByNom(nom).get(0);
-        System.out.println("utilisateur : " + utilisateur);
+    public Optional<UtilisateurDTO> getUtilisateurParNom(String nom) {
+        Utilisateur utilisateur = utilisateurRepository.findUtilisateurByNom(nom).get();
         UtilisateurDTO utilisateurDTO = new UtilisateurDTO(utilisateur.getId(),utilisateur.getNom(),
                 utilisateur.getMotDePasse(),utilisateur.getCourriel());
-       return utilisateurDTO;
+        return Optional.of(utilisateurDTO);
     }
 
     public UtilisateurDTO saveUtilisateur(UtilisateurDTO utilisateurDTO) {
@@ -55,23 +54,9 @@ public class ServiceUtilisateur {
         }
         return courrielUnique && nomlUnique;
     }
-    public boolean valideCourriel(String courriel){
-        if(courriel == null){
-            return false;
-        }
-        final String EMAIL_REGEX = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
-        return courriel.matches(EMAIL_REGEX);
-    }
 
-    public List<UtilisateurDTO> getAllUtlisateurs() {
-        List<Utilisateur> utilisateurs = utilisateurRepository.findAll();
-        List<UtilisateurDTO> utilisateurDTOS = new ArrayList<>();
-        for(Utilisateur utilisateur : utilisateurs){
-            UtilisateurDTO utilisateurDTO = new UtilisateurDTO(utilisateur.getId(), utilisateur.getNom(),
-                    utilisateur.getMotDePasse(),utilisateur.getCourriel());
-            utilisateurDTOS.add(utilisateurDTO);
-        }
-
-        return utilisateurDTOS;
+    public Utilisateur getUtilisateurParNomPourContrats(String nom) {
+        Utilisateur utilisateur = utilisateurRepository.findUtilisateurByNom(nom).get();
+        return utilisateur;
     }
 }
