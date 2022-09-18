@@ -47,7 +47,7 @@ public class ServiceContrat {
             }
         }
 
-        contratDTOs.sort(Comparator.comparing(ContratDTO::getDateFin));
+        contratDTOs.sort(Comparator.comparing(ContratDTO::getId));
         System.out.println("fin get :" + contratDTOs);
         return contratDTOs;
     }
