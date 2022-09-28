@@ -31,11 +31,11 @@ const PageContrats= ({fetchContratsParNom,  contrats, fetchContratsParNomClient}
 
     return (
         <Box m="auto">
-
-              <Header w={10} h={10} text={nom} color={"black"}></Header>
-               <Link href={`http://localhost:3000/utilisateurs/${nom}`}><Button>Retourner</Button></Link>
-
-                    <form  >
+            <Grid templateColumns="repeat(5,1fr)" mt={2} p={3}>
+                <GridItem colSpan={2} colStart={1}><Header w={10} h={10} text={nom} color={"black"}></Header></GridItem>
+                <GridItem colStart={3}><Link href={`http://localhost:3000/utilisateurs/${nom}`}><ArrowBackIcon w="80px" mt={4} ml={1} color="LightBlue"/></Link></GridItem>
+                <GridItem colSpan={2} colEnd={6}>
+                    <form>
                         <FormControl>
                             <InputGroup onChange={traiterInputChangeNom}>
                                 <InputLeftElement
@@ -52,24 +52,29 @@ const PageContrats= ({fetchContratsParNom,  contrats, fetchContratsParNomClient}
                             </InputGroup>
                         </FormControl>
                     </form>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Nom du client</th>
-                            <th>Date d'expiration</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {contrats.map((contrat) => (
-                            <tr  key={contrat.id}>
-                                <td><Link to={`/contrats/${contrat.id}`}>{ contrat.id }</Link></td>
-                                <td><Link to={`/contrats/${contrat.id}`}>{ contrat.nomClient }</Link></td>
-                                <td><Link to={`/contrats/${contrat.id}`}>{ contrat.dateFin }</Link></td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                </GridItem>
+            </Grid>
+            <TableContainer mt="5">
+                <Table variant="striped" colorScheme='teal'>
+                    <TableCaption>......</TableCaption>
+                    <Thead>
+                    <Tr>
+                        <Th>Nombre</Th>
+                        <Th>Nom du client</Th>
+                        <Th>Date d'expiration</Th>
+                    </Tr>
+                    </Thead>
+                    <Tbody>
+                    {contrats.map((contrat) => (
+                        <Tr  key={contrat.id}>
+                            <Td><Link to={`/contrats/${contrat.id}`}>{ contrat.id }</Link></Td>
+                            <Td><Link to={`/contrats/${contrat.id}`}>{ contrat.nomClient }</Link></Td>
+                            <Td><Link to={`/contrats/${contrat.id}`}>{ contrat.dateFin }</Link></Td>
+                        </Tr>
+                    ))}
+                    </Tbody>
+                </Table>
+            </TableContainer>
         </Box>
     )
 }

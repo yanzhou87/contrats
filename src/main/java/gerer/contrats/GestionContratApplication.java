@@ -52,6 +52,9 @@ public class GestionContratApplication implements CommandLineRunner {
         utilisateur.addContrats(contrat5);
         System.out.println(serviceContrat.getAllContrats());
 
+        Utilisateur utilisateur23 = new Utilisateur("yan","123456","yanxx@gmail.com");
+        Utilisateur utilisateurr = serviceUtilisateur.saveU(utilisateur23);
+        System.out.println(utilisateurr);
 
     }
 }
