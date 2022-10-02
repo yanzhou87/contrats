@@ -67,9 +67,9 @@ const PageContrats= ({fetchContratsParNom,  contrats, fetchContratsParNomClient}
                     <Tbody>
                     {contrats.map((contrat) => (
                         <Tr  key={contrat.id}>
-                            <Td><Link to={`/contrats/${contrat.id}`}>{ contrat.id }</Link></Td>
-                            <Td><Link to={`/contrats/${contrat.id}`}>{ contrat.nomClient }</Link></Td>
-                            <Td><Link to={`/contrats/${contrat.id}`}>{ contrat.dateFin }</Link></Td>
+                            <Td><Link href={`http://localhost:3000/utilisateurs/${nom}/contrats/${contrat.id}`}>{ contrat.id }</Link></Td>
+                            <Td><Link href={`http://localhost:3000/utilisateurs/${nom}/contrats/${contrat.id}`}>{ contrat.nomClient }</Link></Td>
+                            <Td><Link href={`http://localhost:3000/utilisateurs/${nom}/contrats/${contrat.id}`}>{ contrat.dateFin }</Link></Td>
                         </Tr>
                     ))}
                     </Tbody>

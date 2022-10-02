@@ -7,6 +7,7 @@ import AjouterUtilisateur from "./components/pages/AjouterUtilisateur";
 import { ChakraProvider } from '@chakra-ui/react'
 import PageMenu from "./components/pages/PageMenu";
 import PageContrats from "./components/pages/PageContrats";
+import PageInformationsDuContrat from "./components/pages/PageInformationsDuContrat";
 
 function App() {
     const [estLogin, setEstLogin] = useState(false)
@@ -16,6 +17,7 @@ function App() {
     const [compteExistePas, setCompteExistePas] = useState(false)
     const [contrats, setContrats] = useState([])
 
+    const [nomUtilisateur, setNomUtilisateur] = useState("")
     //useEffect(() => {
     //   const getUtilisateurs = async () => {
     //        const utilisateursFromServer = await fetchUtilisateurs()
@@ -89,6 +91,7 @@ function App() {
                         <Route exact path='/ajouterUtilisateur' element={<AjouterUtilisateur onAjouter={ajouterCompte} succesInscription={succesInscription} nomOuCourrielExistent={nomOuCourrielExistent}/>}/>
                         <Route exact path='/utilisateurs/:nom' element={<PageMenu />}/>
                         <Route exact path='/utilisateurs/:nom/contrats' element={<PageContrats fetchContratsParNom={fetchContratsParNom} contrats={contrats} fetchContratsParNomClient={fetchContratsParNomClient}/>}/>
+                        <Route exact path='/utilisateurs/:nom/contrats/:id' element={<PageInformationsDuContrat />}/>
                     </Routes>
                 </div>
             </Router>
