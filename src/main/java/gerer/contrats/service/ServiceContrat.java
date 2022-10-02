@@ -28,8 +28,8 @@ public class ServiceContrat {
         contrats.sort(Comparator.comparing(Contrat::getDateFin).reversed());
         System.out.println(contrats);
         for(Contrat c : contrats){
-            ContratDTO contratDTO = new ContratDTO(c.getId(),c.getNom(),
-                    c.getDateDebut().toString(),c.getDateFin().toString(), c.getNomClient(), c.getMontant());
+            ContratDTO contratDTO = new ContratDTO(c.getId(),c.getNom(),c.getDateDebut().toString(),
+                    c.getDateFin().toString(),c.getNomClient(),c.getMontant(),c.getModeDuPaiement(), c.isRappelDePaiement());
             contratDTOs.add(contratDTO);
         }
         System.out.println("------" +contratDTOs);
@@ -55,9 +55,17 @@ public class ServiceContrat {
         List<ContratDTO> listResultat = new ArrayList<>();
         List<Contrat> contratList = contratRepository.findContratsParNomClient(nom, nomClient);
         for(Contrat c : contratList){
-            ContratDTO contratDTO = new ContratDTO(c.getId(),c.getNom(),c.getDateDebut().toString(),c.getDateFin().toString(),c.getNomClient(),c.getMontant());
+            ContratDTO contratDTO = new ContratDTO(c.getId(),c.getNom(),c.getDateDebut().toString(),
+                    c.getDateFin().toString(),c.getNomClient(),c.getMontant(),c.getModeDuPaiement(), c.isRappelDePaiement());
             listResultat.add(contratDTO);
         }
         return listResultat;
+    }
+    public ContratDTO getContratParId(long id) {
+        Contrat contrat =  contratRepository.findById(id).get();
+        ContratDTO contratDTO = new ContratDTO(contrat.getId(),contrat.getNom(),contrat.getDateDebut().toString(),
+                contrat.getDateFin().toString(), contrat.getNomClient(), contrat.getMontant(),contrat.getModeDuPaiement(),
+                contrat.isRappelDePaiement());
+        return contratDTO;
     }
 }

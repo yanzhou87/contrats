@@ -21,8 +21,9 @@ public class Contrat {
     private LocalDate dateDebut;
     private LocalDate dateFin;
     private float montant;
-
     private String nomClient;
+    private String modeDuPaiement;
+    private boolean rappelDePaiement;
 
     @ManyToOne
     @JoinColumn(name = "UTILISATEUR_ID")

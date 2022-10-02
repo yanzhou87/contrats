@@ -52,6 +52,11 @@ public class ContratController {
         //return new ResponseEntity<>(serviceUtilisateur.getUtilisateurParNom(nom), HttpStatus.OK);
     }
 
+    @GetMapping("/utilisateurs/contrats/{id}")
+    public ResponseEntity<ContratDTO> getContratsParId( @PathVariable long id) {
+        return new ResponseEntity<>(serviceContrat.getContratParId( id), HttpStatus.OK);
+    }
+
     @PostMapping("/utilisateurs")
     public ResponseEntity<UtilisateurDTO> ajouterUtilisateur(@RequestBody UtilisateurDTO utilisateurDTO) {
         System.out.println("post : " + utilisateurDTO);
