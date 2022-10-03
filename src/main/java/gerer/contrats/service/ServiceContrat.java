@@ -3,9 +3,12 @@ package gerer.contrats.service;
 import gerer.contrats.forms.ContratDTO;
 import gerer.contrats.model.Contrat;
 import gerer.contrats.repository.ContratRepository;
+import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -67,5 +70,25 @@ public class ServiceContrat {
                 contrat.getDateFin().toString(), contrat.getNomClient(), contrat.getMontant(),contrat.getModeDuPaiement(),
                 contrat.isRappelDePaiement());
         return contratDTO;
+    }
+
+    public List<ContratDTO> getContratsExpirants(String nomUtilisateur) {
+
+        List<Contrat> contrats = contratRepository.findAll();
+        List<Contrat> contratsExpirants = contrats.stream().filter((contrat)-> Period.between(LocalDate.now(), contrat.getDateFin()).getDays() <= 3).toList();
+        List<ContratDTO> contratDTOS = new ArrayList<>();
+    //    contratsExpirants.stream().forEach((contrat)-> contratDTOS.add(new ContratDTO(contrat.getId(),contrat.getNom(),
+     //           contrat.getDateDebut().toString(),contrat.getDateFin().toString(),contrat.getNomClient(),contrat.getMontant(),contrat.getModeDuPaiement(),
+        //        contrat.isRappelDePaiement())));
+
+        for(Contrat contrat : contratsExpirants){
+            if(contrat.getNom().equals(nomUtilisateur)){
+                ContratDTO contratDTO = new ContratDTO(contrat.getId(),contrat.getNom(),
+                        contrat.getDateDebut().toString(),contrat.getDateFin().toString(),contrat.getNomClient(),contrat.getMontant(),contrat.getModeDuPaiement(),
+                        contrat.isRappelDePaiement());
+                contratDTOS.add(contratDTO);
+            }
+        }
+        return contratDTOS;
     }
 }

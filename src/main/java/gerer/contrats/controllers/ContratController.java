@@ -57,6 +57,11 @@ public class ContratController {
         return new ResponseEntity<>(serviceContrat.getContratParId( id), HttpStatus.OK);
     }
 
+    @GetMapping("utilisateurs/{nom}/contratsExpirants")
+    public ResponseEntity<List<ContratDTO>> getAllContratExpirants(@PathVariable String nom) {
+        return new ResponseEntity<>(serviceContrat.getContratsExpirants(nom), HttpStatus.OK);
+    }
+
     @PostMapping("/utilisateurs")
     public ResponseEntity<UtilisateurDTO> ajouterUtilisateur(@RequestBody UtilisateurDTO utilisateurDTO) {
         System.out.println("post : " + utilisateurDTO);
