@@ -43,6 +43,10 @@ public class ContratController {
         return new ResponseEntity<>(serviceContrat.getContratsParNomUtilisateurEtNomClient(nom, nomClient), HttpStatus.OK);
     }
 
+    @GetMapping("/utilisateurs/{nom}/contratsExpirant/{nomClient}")
+    public ResponseEntity<List<ContratDTO>> getAllContratExpirantParNomUtilisateurEtNomClient(@PathVariable String nom, @PathVariable String nomClient) {
+        return new ResponseEntity<>(serviceContrat.getContratsExpirantsParNomUtilisateurEtNomClient(nom, nomClient), HttpStatus.OK);
+    }
     @GetMapping("/utilisateurs/{nom}")
     public ResponseEntity<UtilisateurDTO> getUtilisateurParNom(@PathVariable String nom) {
         System.out.println("get utli par nom" + serviceUtilisateur.getUtilisateurParNom(nom).get());

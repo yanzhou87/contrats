@@ -32,7 +32,7 @@ const PageInformationsDuContrat = () => {
             </Box>
             <SimpleGrid m="auto" width="600px" spacing='40' columns={{ sm: 1, md: 2 }} p={5}>
                 <Link href={`http://localhost:3000/utilisateurs/${nom}/create`}><Button bg="pink" w="200px">Renouveler</Button></Link>
-                <Link href={`http://localhost:3000/utilisateurs/${nom}/contrats`}><Button bg="pink"  w="200px">Retourner</Button></Link>
+                <Link href={`http://localhost:3000/utilisateurs/${nom}`}><Button bg="pink"  w="200px">Retourner</Button></Link>
             </SimpleGrid>
         </Box>
     )

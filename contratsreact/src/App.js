@@ -8,6 +8,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 import PageMenu from "./components/pages/PageMenu";
 import PageContrats from "./components/pages/PageContrats";
 import PageInformationsDuContrat from "./components/pages/PageInformationsDuContrat";
+import PageContratsExpirants from "./components/pages/PageContratsExpirants";
 
 function App() {
     const [estLogin, setEstLogin] = useState(false)
@@ -16,15 +17,7 @@ function App() {
     const [nomOuCourrielExistent, setNomOuCourrielExistent] = useState(false)
     const [compteExistePas, setCompteExistePas] = useState(false)
     const [contrats, setContrats] = useState([])
-
-    const [nomUtilisateur, setNomUtilisateur] = useState("")
-    //useEffect(() => {
-    //   const getUtilisateurs = async () => {
-    //        const utilisateursFromServer = await fetchUtilisateurs()
-    //        setUtilisateurs(utilisateursFromServer)
-    //     }
-    //      getUtilisateurs()
-    //  }, [])
+    const [contratsExpirants, setContratsExpirants] = useState([])
 
     const fetchUtilisateurs = async () => {
         const res = await fetch('http://localhost:8080/utilisateurs')
@@ -55,6 +48,14 @@ function App() {
         return data
     }
 
+    const fetchContratsParNomClientPourExpirant = async (nom, nomClient) => {
+
+        const res = await fetch(`http://localhost:8080/utilisateurs/${nom}/contratsExpirant/${nomClient}`)
+        const data = await res.json()
+        setContratsExpirants(data)
+        return data
+    }
+
     const fetchContratsParNom = async (nom) => {
         const res = await fetch(`http://localhost:8080/utilisateurs/${nom}/contrats`)
         const data = await res.json()
@@ -82,6 +83,14 @@ function App() {
         }
     }
 
+    const fetchContratsContratsExpirants = async (nom) => {
+        console.log("fetch expirants : " + nom)
+        const res = await fetch(`http://localhost:8080/utilisateurs/${nom}/contratsExpirants`)
+        const data = await res.json()
+        setContratsExpirants(data)
+        return data
+    }
+
     return (
         <ChakraProvider>
             <Router>
@@ -92,6 +101,7 @@ function App() {
                         <Route exact path='/utilisateurs/:nom' element={<PageMenu />}/>
                         <Route exact path='/utilisateurs/:nom/contrats' element={<PageContrats fetchContratsParNom={fetchContratsParNom} contrats={contrats} fetchContratsParNomClient={fetchContratsParNomClient}/>}/>
                         <Route exact path='/utilisateurs/:nom/contrats/:id' element={<PageInformationsDuContrat />}/>
+                        <Route exact path='/utilisateurs/:nom/contratsExpirants' element={<PageContratsExpirants fetchContratsContratsExpirants={fetchContratsContratsExpirants} contratsExpirants={contratsExpirants} fetchContratsParNomClientPourExpirant={fetchContratsParNomClientPourExpirant}/>}/>
                     </Routes>
                 </div>
             </Router>

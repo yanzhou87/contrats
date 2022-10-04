@@ -91,4 +91,15 @@ public class ServiceContrat {
         }
         return contratDTOS;
     }
+
+    public List<ContratDTO> getContratsExpirantsParNomUtilisateurEtNomClient(String nom, String nomClient) {
+        List<ContratDTO> listContratsExpirants = getContratsExpirants(nom);
+        List<ContratDTO> listResultat = new ArrayList<>();
+        for(ContratDTO c : listContratsExpirants){
+            if(c.getNomClient().contains(nomClient)){
+                listResultat.add(c);
+            }
+        }
+        return listResultat;
+    }
 }

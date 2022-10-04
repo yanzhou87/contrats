@@ -29,7 +29,7 @@ public class GestionContratApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         LocalDate debut = LocalDate.now();
-        LocalDate fin = LocalDate.now().plusDays(30);
+        LocalDate fin = LocalDate.now().plusDays(2);
         LocalDate fin1 = LocalDate.now().plusDays(15);
         LocalDate fin2 = LocalDate.now().plusDays(45);
         LocalDate fin3 = LocalDate.now().plusDays(10);
