@@ -16,5 +16,4 @@ public class ContratDTO {
     private String nomClient;
     private float montant;
     private String modeDuPaiement;
-    private boolean rappelDePaiement;
 }

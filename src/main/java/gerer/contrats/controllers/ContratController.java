@@ -75,4 +75,9 @@ public class ContratController {
         }
         return new ResponseEntity<>(serviceUtilisateur.saveUtilisateur(utilisateurDTO), HttpStatus.CREATED);
     }
+
+    @PostMapping("utilisateurs/{nom}/create")
+    public ResponseEntity<ContratDTO> ajouterContrat(@RequestBody ContratDTO contratDTO){
+        return new ResponseEntity<>(serviceContrat.saveContratDTO(contratDTO),HttpStatus.CREATED);
+    }
 }

@@ -23,7 +23,6 @@ public class Contrat {
     private float montant;
     private String nomClient;
     private String modeDuPaiement;
-    private boolean rappelDePaiement;
 
     @ManyToOne
     @JoinColumn(name = "UTILISATEUR_ID")
@@ -35,6 +34,15 @@ public class Contrat {
         this.dateFin = dateFin;
         this.montant = montant;
         this.nomClient = nomClient;
+    }
+
+    public Contrat(String nom, LocalDate dateDebut, LocalDate dateFin, float montant, String nomClient, String modeDuPaiement) {
+        this.nom = nom;
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
+        this.montant = montant;
+        this.nomClient = nomClient;
+        this.modeDuPaiement = modeDuPaiement;
     }
 
     @Override
