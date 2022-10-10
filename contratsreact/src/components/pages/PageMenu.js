@@ -13,7 +13,7 @@ const PageMenu = ({}) => {
                 <Stack direction='column' mt="10" spacing={10} m="auto">
                     <Link href={`http://localhost:3000/utilisateurs/${nom}/contrats`} align="center" ><Button bg="LightBlue" w={300}>Les contrats</Button></Link>
                     <Link href={`http://localhost:3000/utilisateurs/${nom}/contratsExpirants`} align="center" ><Button bg="LightBlue" w={300}>Les contrats expirant</Button></Link>
-                    <Link align="center"><Button bg="LightBlue" w={300}>Ajouter un nouveau contrat</Button></Link>
+                    <Link href={`http://localhost:3000/utilisateurs/${nom}/create`}  align="center"><Button bg="LightBlue" w={300}>Ajouter un nouveau contrat</Button></Link>
                 </Stack>
             </Box>
         </Box>

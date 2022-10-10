@@ -9,6 +9,7 @@ import PageMenu from "./components/pages/PageMenu";
 import PageContrats from "./components/pages/PageContrats";
 import PageInformationsDuContrat from "./components/pages/PageInformationsDuContrat";
 import PageContratsExpirants from "./components/pages/PageContratsExpirants";
+import PageCreerContrat from "./components/pages/PageCreerContrat";
 
 function App() {
     const [estLogin, setEstLogin] = useState(false)
@@ -18,6 +19,8 @@ function App() {
     const [compteExistePas, setCompteExistePas] = useState(false)
     const [contrats, setContrats] = useState([])
     const [contratsExpirants, setContratsExpirants] = useState([])
+    const [estAjoute, setEstAjoute] = useState(false)
+    const [contrat, setContrat] = useState({})
 
     const fetchUtilisateurs = async () => {
         const res = await fetch('http://localhost:8080/utilisateurs')
@@ -91,6 +94,22 @@ function App() {
         return data
     }
 
+    const ajouterContrat = async (contrat) => {
+        console.log("ajouter contrat : " + contrat.nom)
+        const res = await fetch(`http://localhost:8080/utilisateurs/${contrat.nom}/create`,
+            {
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json',
+                },
+                body:JSON.stringify(contrat)
+            })
+        const data = await res.json()
+        if(res.status === 201){
+            setEstAjoute(true)
+            setContrats([...contrats, data])
+        }
+    }
     return (
         <ChakraProvider>
             <Router>
@@ -102,6 +121,7 @@ function App() {
                         <Route exact path='/utilisateurs/:nom/contrats' element={<PageContrats fetchContratsParNom={fetchContratsParNom} contrats={contrats} fetchContratsParNomClient={fetchContratsParNomClient}/>}/>
                         <Route exact path='/utilisateurs/:nom/contrats/:id' element={<PageInformationsDuContrat />}/>
                         <Route exact path='/utilisateurs/:nom/contratsExpirants' element={<PageContratsExpirants fetchContratsContratsExpirants={fetchContratsContratsExpirants} contratsExpirants={contratsExpirants} fetchContratsParNomClientPourExpirant={fetchContratsParNomClientPourExpirant}/>}/>
+                        <Route exact path='/utilisateurs/:nom/create' element={<PageCreerContrat fetchContratsParNom={fetchContratsParNom} estAjoute={estAjoute} ajouterContrat={ajouterContrat} contrat={contrat}/>}/>
                     </Routes>
                 </div>
             </Router>
