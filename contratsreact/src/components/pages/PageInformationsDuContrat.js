@@ -28,7 +28,6 @@ const PageInformationsDuContrat = () => {
                 <Box mb={5} fontSize={40}>Date Fin : {contrat.dateFin}</Box>
                 <Box mb={5} fontSize={40}>Montant : {contrat.montant} $</Box>
                 <Box mb={5} fontSize={40}>Mode du paiement : {contrat.modeDuPaiement} </Box>
-                <Box mb={5} fontSize={40}>Rappel de paiement : {contrat.rappelDePaiement ? "Oui" : "Non"}</Box>
             </Box>
             <SimpleGrid m="auto" width="600px" spacing='40' columns={{ sm: 1, md: 2 }} p={5}>
                 <Link href={`http://localhost:3000/utilisateurs/${nom}/create`}><Button bg="pink" w="200px">Renouveler</Button></Link>

@@ -1,19 +1,28 @@
 import {
+    AlertDialog,
+    AlertDialogBody,
+    AlertDialogContent, AlertDialogFooter, AlertDialogHeader,
+    AlertDialogOverlay,
     Box,
     Button,
-    Checkbox,
     FormControl,
     FormLabel,
     Input,
-    Link, Radio,
-    RadioGroup, Stack
+    Link,
+    Radio,
+    RadioGroup,
+    Stack,
+    useDisclosure
 } from "@chakra-ui/react";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useParams} from "react-router-dom";
+import 'react-day-picker/dist/style.css';
+import {CalendarIcon} from "@chakra-ui/icons";
+import {DayPicker} from "react-day-picker";
 
 const PageCreerContrat = ({fetchContratsParNom, estAjoute, ajouterContrat, contrat}) => {
     const {nom} = useParams();
-    useEffect( () => {
+    useEffect(() => {
         fetchContratsParNom(nom)
     }, [])
 
@@ -32,38 +41,43 @@ const PageCreerContrat = ({fetchContratsParNom, estAjoute, ajouterContrat, contr
 
     const [estErreur, setEstErreur] = useState(false)
 
-
-    if(mois === "1"){
+    const {isOpen, onOpen, onClose} = useDisclosure()
+    const [isOpenDateFin, setIsOpenDateFin] = useState(false)
+    const [onCloseDateFin, setOnCloseDateFin] = useState(false)
+    console.log(dateDebut)
+    if (mois === "1") {
         dateFin.setFullYear(dateDebut.getFullYear())
         dateFin.setMonth(parseInt(dateDebut.getMonth() + 1))
-        dateFin.setDate(parseInt(dateDebut.getDate() -1))
+        dateFin.setDate(parseInt(dateDebut.getDate() - 1))
     }
-    if(mois === "3"){
+    if (mois === "3") {
         dateFin.setFullYear(dateDebut.getFullYear())
         dateFin.setMonth(parseInt(dateDebut.getMonth() + 3))
-        dateFin.setDate(parseInt(dateDebut.getDate() -1))
+        dateFin.setDate(parseInt(dateDebut.getDate() - 1))
     }
-    if(mois === "6"){
+    if (mois === "6") {
         dateFin.setFullYear(dateDebut.getFullYear())
         dateFin.setMonth(parseInt(dateDebut.getMonth() + 6))
-        dateFin.setDate(parseInt(dateDebut.getDate() -1))
+        dateFin.setDate(parseInt(dateDebut.getDate() - 1))
     }
-    if(mois === "12"){
-        dateFin.setFullYear(parseInt(dateDebut.getFullYear()+1))
+    if (mois === "12") {
+        dateFin.setFullYear(parseInt(dateDebut.getFullYear() + 1))
         dateFin.setMonth(dateDebut.getMonth())
-        dateFin.setDate(parseInt(dateDebut.getDate() -1))
+        dateFin.setDate(parseInt(dateDebut.getDate() - 1))
     }
 
     const onSubmit = (e) => {
         e.preventDefault()
 
-        if(!nomClient || !dateDebut || !mois || !dateFin || !montant || !modeDuPaiement){
+        if (!nomClient || !dateDebut || !mois || !dateFin || !montant || !modeDuPaiement) {
             setEstErreur(true)
             return
         }
 
-        ajouterContrat({nom : nom, dateDebut : dateDebut,
-            dateFin : dateFin, nomClient: nomClient, montant : montant, modeDuPaiement : modeDuPaiement})
+        ajouterContrat({
+            nom: nom, dateDebut: dateDebut,
+            dateFin: dateFin, nomClient: nomClient, montant: montant, modeDuPaiement: modeDuPaiement
+        })
 
         setNomClient("")
         setDateDebut(new Date())
@@ -76,7 +90,7 @@ const PageCreerContrat = ({fetchContratsParNom, estAjoute, ajouterContrat, contr
     if (estAjoute) {
         window.location.assign(`http://localhost:3000/utilisateurs/${nom}/contrats`)
     }
-    return(
+    return (
 
         <form onSubmit={onSubmit}>
             {
@@ -85,48 +99,87 @@ const PageCreerContrat = ({fetchContratsParNom, estAjoute, ajouterContrat, contr
                     :
                     <Box></Box>
             }
-            <FormControl  isInvalid={estErreur} isRequired >
+            <FormControl isInvalid={estErreur} isRequired>
                 <FormLabel m={3}>Nom Client: </FormLabel>
-                <Input width={400} m={3} min={2} type="text" placeholder={'nom'} value={nomClient} onChange={traiterInputChangeNomClient}/>
+                <Input width={400} m={3} min={2} type="text" placeholder={'nom'} value={nomClient}
+                       onChange={traiterInputChangeNomClient}/>
             </FormControl>
 
-            <FormControl isRequired>
+            <FormControl>
                 <FormLabel>Début de la date :</FormLabel>
+                <Input width={400} m={3} type="number"
+                       placeholder={`${dateDebut.getFullYear()}-${dateDebut.getMonth() + 1}-${dateDebut.getDate()}`}
+                       value={dateDebut} onChange={traiterInputChangeDateDebut}/>
 
-                <RadioGroup onChange={setMois} value={mois}>
-                    <Stack direction='row'>
-                        <Radio size='sm'  colorScheme='green' value='1'>1 mois</Radio>
-                        <Radio size='sm'  colorScheme='green' value='3'>3 mois</Radio>
-                        <Radio size='sm'  colorScheme='green' value='6'>6 mois</Radio>
-                        <Radio size='sm'  colorScheme='green' value='12'>1 année</Radio>
-                    </Stack>
-                </RadioGroup>
+                <Button colorScheme='blue' onClick={onOpen}>
+                    <CalendarIcon/>
+                </Button>
+
+                <AlertDialog
+                    isOpen={isOpen}
+                    onClose={onClose}
+                >
+                    <AlertDialogOverlay>
+                        <AlertDialogContent>
+                            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                                Choisir le début de la date
+                            </AlertDialogHeader>
+
+                            <AlertDialogBody>
+                                <DayPicker
+                                    mode="single"
+                                    selected={dateDebut}
+                                    onSelect={setDateDebut}
+                                />
+                                <RadioGroup onChange={setMois} value={mois}>
+                                    <Stack direction='row'>
+                                        <Radio size='sm' value='1'>1 mois</Radio>
+                                        <Radio size='sm' value='3'>3 mois</Radio>
+                                        <Radio size='sm' value='6'>6 mois</Radio>
+                                        <Radio size='sm' value='12'>12 mois</Radio>
+                                    </Stack>
+                                </RadioGroup>
+                            </AlertDialogBody>
+
+                            <AlertDialogFooter>
+                                <Button colorScheme='red' onClick={onClose} ml={3}>
+                                    Ok
+                                </Button>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialogOverlay>
+                </AlertDialog>
+            </FormControl>
+
+            <FormControl>
+                <FormLabel>Fin de la date :</FormLabel>
+                <Input width={400} m={3} type="number"
+                       placeholder={`${dateFin.getFullYear()}-${dateFin.getMonth() + 1}-${dateFin.getDate()}`}
+                       value={`${dateFin.getFullYear()}-${dateFin.getMonth() + 1}-${dateFin.getDate()}`}
+                   onChange={traiterInputChangeDateFin}/>
             </FormControl>
 
             <FormControl isRequired>
-                <FormLabel>Fin de la date :</FormLabel>
-
-            </FormControl>
-
-            <FormControl  isRequired>
                 <FormLabel m={3}>montant ： </FormLabel>
-                <Input width={400} m={3} type="number" placeholder={'montant'} value={montant} onChange={traiterInputChangeMontant}/>
+                <Input width={400} m={3} type="number" placeholder={'montant'} value={montant}
+                       onChange={traiterInputChangeMontant}/>
             </FormControl>
 
             <FormControl isRequired>
                 <FormLabel>mode du paiement</FormLabel>
                 <RadioGroup onChange={setModeDuPaiement} value={modeDuPaiement}>
                     <Stack direction='row'>
-                        <Radio size='sm'  value='1'>1 mois</Radio>
-                        <Radio size='sm'  value='3'>3 mois</Radio>
-                        <Radio size='sm'  value='6'>6 mois</Radio>
-                        <Radio size='sm'  value='12'>12 mois</Radio>
+                        <Radio size='sm' value='1'>1 mois</Radio>
+                        <Radio size='sm' value='3'>3 mois</Radio>
+                        <Radio size='sm' value='6'>6 mois</Radio>
+                        <Radio size='sm' value='12'>12 mois</Radio>
                     </Stack>
                 </RadioGroup>
             </FormControl>
 
             <Button width={200} m={3} bg='pink' type='submit'>Ajouter un contrat</Button>
-            <Link href={`http://localhost:3000/utilisateurs/${nom}/contrats`} m={3} ><Button bg='yellow' m='5' width={200} >Retourner</Button></Link>
+            <Link href={`http://localhost:3000/utilisateurs/${nom}`} m={3}><Button bg='red' m='5'
+                                                                                   width={200}>Retourner</Button></Link>
         </form>
 
     )
