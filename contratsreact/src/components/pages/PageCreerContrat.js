@@ -1,6 +1,6 @@
 import {
     AlertDialog,
-    AlertDialogBody,
+    AlertDialogBody, AlertDialogCloseButton,
     AlertDialogContent, AlertDialogFooter, AlertDialogHeader,
     AlertDialogOverlay,
     Box,
@@ -19,6 +19,7 @@ import {useParams} from "react-router-dom";
 import 'react-day-picker/dist/style.css';
 import {CalendarIcon} from "@chakra-ui/icons";
 import {DayPicker} from "react-day-picker";
+import Header from "../Header";
 
 const PageCreerContrat = ({fetchContratsParNom, estAjoute, ajouterContrat, contrat}) => {
     const {nom} = useParams();
@@ -42,8 +43,6 @@ const PageCreerContrat = ({fetchContratsParNom, estAjoute, ajouterContrat, contr
     const [estErreur, setEstErreur] = useState(false)
 
     const {isOpen, onOpen, onClose} = useDisclosure()
-    const [isOpenDateFin, setIsOpenDateFin] = useState(false)
-    const [onCloseDateFin, setOnCloseDateFin] = useState(false)
     console.log(dateDebut)
     if (mois === "1") {
         dateFin.setFullYear(dateDebut.getFullYear())
@@ -92,95 +91,101 @@ const PageCreerContrat = ({fetchContratsParNom, estAjoute, ajouterContrat, contr
     }
     return (
 
-        <form onSubmit={onSubmit}>
-            {
-                estAjoute ?
-                    <Box>Contrat est ajouté !!!!</Box>
-                    :
-                    <Box></Box>
-            }
-            <FormControl isInvalid={estErreur} isRequired>
-                <FormLabel m={3}>Nom Client: </FormLabel>
-                <Input width={400} m={3} min={2} type="text" placeholder={'nom'} value={nomClient}
-                       onChange={traiterInputChangeNomClient}/>
-            </FormControl>
+        <Box m="auto">
+            <Header text={nom} color={"pink"}></Header>
+            <Box m="auto" width="600px" mt={5} boxShadow='outline' p='6' rounded='md' bg='white' mb={5}>
+                <form onSubmit={onSubmit}>
+                    {
+                        estAjoute ?
+                            <Box>Contrat est ajouté !!!!</Box>
+                            :
+                            <Box></Box>
+                    }
+                    <FormControl isInvalid={estErreur} isRequired>
+                        <FormLabel m={3}>Nom Client: </FormLabel>
+                        <Input width={400} m={3} min={2} type="text" placeholder={'nom'} value={nomClient}
+                               onChange={traiterInputChangeNomClient}/>
+                    </FormControl>
 
-            <FormControl>
-                <FormLabel>Début de la date :</FormLabel>
-                <Input width={400} m={3} type="number"
-                       placeholder={`${dateDebut.getFullYear()}-${dateDebut.getMonth() + 1}-${dateDebut.getDate()}`}
-                       value={dateDebut} onChange={traiterInputChangeDateDebut}/>
+                    <FormControl>
+                        <FormLabel>Début de la date :</FormLabel>
+                        <Input width={400} m={3} type="number"
+                               placeholder={`${dateDebut.getFullYear()}-${dateDebut.getMonth() + 1}-${dateDebut.getDate()}`}
+                               value={dateDebut} onChange={traiterInputChangeDateDebut}/>
 
-                <Button colorScheme='blue' onClick={onOpen}>
-                    <CalendarIcon/>
-                </Button>
+                        <Button colorScheme='blue' onClick={onOpen}>
+                            <CalendarIcon/>
+                        </Button>
 
-                <AlertDialog
-                    isOpen={isOpen}
-                    onClose={onClose}
-                >
-                    <AlertDialogOverlay>
-                        <AlertDialogContent>
-                            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-                                Choisir le début de la date
-                            </AlertDialogHeader>
+                        <AlertDialog
+                            isOpen={isOpen}
+                            onClose={onClose}
+                        >
+                            <AlertDialogOverlay>
+                                <AlertDialogContent>
+                                    <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                                        Choisir le début de la date
+                                    </AlertDialogHeader>
+                                    <AlertDialogCloseButton />
+                                    <AlertDialogBody>
+                                        <DayPicker
+                                            mode="single"
+                                            selected={dateDebut}
+                                            onSelect={setDateDebut}
+                                        />
+                                        <RadioGroup onChange={setMois} value={mois}>
+                                            <Stack direction='row'>
+                                                <Radio size='sm' value='1'>1 mois</Radio>
+                                                <Radio size='sm' value='3'>3 mois</Radio>
+                                                <Radio size='sm' value='6'>6 mois</Radio>
+                                                <Radio size='sm' value='12'>12 mois</Radio>
+                                            </Stack>
+                                        </RadioGroup>
+                                    </AlertDialogBody>
 
-                            <AlertDialogBody>
-                                <DayPicker
-                                    mode="single"
-                                    selected={dateDebut}
-                                    onSelect={setDateDebut}
-                                />
-                                <RadioGroup onChange={setMois} value={mois}>
-                                    <Stack direction='row'>
-                                        <Radio size='sm' value='1'>1 mois</Radio>
-                                        <Radio size='sm' value='3'>3 mois</Radio>
-                                        <Radio size='sm' value='6'>6 mois</Radio>
-                                        <Radio size='sm' value='12'>12 mois</Radio>
-                                    </Stack>
-                                </RadioGroup>
-                            </AlertDialogBody>
+                                    <AlertDialogFooter>
+                                        <Button colorScheme='red' onClick={onClose} ml={3}>
+                                            Ok
+                                        </Button>
+                                    </AlertDialogFooter>
+                                </AlertDialogContent>
+                            </AlertDialogOverlay>
+                        </AlertDialog>
+                    </FormControl>
 
-                            <AlertDialogFooter>
-                                <Button colorScheme='red' onClick={onClose} ml={3}>
-                                    Ok
-                                </Button>
-                            </AlertDialogFooter>
-                        </AlertDialogContent>
-                    </AlertDialogOverlay>
-                </AlertDialog>
-            </FormControl>
+                    <FormControl>
+                        <FormLabel>Fin de la date :</FormLabel>
+                        <Input width={400} m={3} type="number"
+                               placeholder={`${dateFin.getFullYear()}-${dateFin.getMonth() + 1}-${dateFin.getDate()}`}
+                               value={`${dateFin.getFullYear()}-${dateFin.getMonth() + 1}-${dateFin.getDate()}`}
+                               onChange={traiterInputChangeDateFin}/>
+                    </FormControl>
 
-            <FormControl>
-                <FormLabel>Fin de la date :</FormLabel>
-                <Input width={400} m={3} type="number"
-                       placeholder={`${dateFin.getFullYear()}-${dateFin.getMonth() + 1}-${dateFin.getDate()}`}
-                       value={`${dateFin.getFullYear()}-${dateFin.getMonth() + 1}-${dateFin.getDate()}`}
-                   onChange={traiterInputChangeDateFin}/>
-            </FormControl>
+                    <FormControl isRequired>
+                        <FormLabel m={3}>montant ： </FormLabel>
+                        <Input width={400} m={3} type="number" placeholder={'montant'} value={montant}
+                               onChange={traiterInputChangeMontant}/>
+                    </FormControl>
 
-            <FormControl isRequired>
-                <FormLabel m={3}>montant ： </FormLabel>
-                <Input width={400} m={3} type="number" placeholder={'montant'} value={montant}
-                       onChange={traiterInputChangeMontant}/>
-            </FormControl>
+                    <FormControl isRequired>
+                        <FormLabel>mode du paiement</FormLabel>
+                        <RadioGroup onChange={setModeDuPaiement} value={modeDuPaiement}>
+                            <Stack direction='row'>
+                                <Radio size='sm' value='1'>1 mois</Radio>
+                                <Radio size='sm' value='3'>3 mois</Radio>
+                                <Radio size='sm' value='6'>6 mois</Radio>
+                                <Radio size='sm' value='12'>12 mois</Radio>
+                            </Stack>
+                        </RadioGroup>
+                    </FormControl>
 
-            <FormControl isRequired>
-                <FormLabel>mode du paiement</FormLabel>
-                <RadioGroup onChange={setModeDuPaiement} value={modeDuPaiement}>
-                    <Stack direction='row'>
-                        <Radio size='sm' value='1'>1 mois</Radio>
-                        <Radio size='sm' value='3'>3 mois</Radio>
-                        <Radio size='sm' value='6'>6 mois</Radio>
-                        <Radio size='sm' value='12'>12 mois</Radio>
-                    </Stack>
-                </RadioGroup>
-            </FormControl>
+                    <Button width={200} m={3} bg='pink' type='submit'>Ajouter un contrat</Button>
+                    <Link href={`http://localhost:3000/utilisateurs/${nom}`} m={3}><Button bg='red' m='5'
+                                                                                           width={200}>Retourner</Button></Link>
+                </form>
+            </Box>
 
-            <Button width={200} m={3} bg='pink' type='submit'>Ajouter un contrat</Button>
-            <Link href={`http://localhost:3000/utilisateurs/${nom}`} m={3}><Button bg='red' m='5'
-                                                                                   width={200}>Retourner</Button></Link>
-        </form>
+        </Box>
 
     )
 }
