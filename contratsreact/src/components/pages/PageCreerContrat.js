@@ -87,7 +87,7 @@ const PageCreerContrat = ({fetchContratsParNom, estAjoute, ajouterContrat, contr
     }
 
     if (estAjoute) {
-        window.location.assign(`http://localhost:3000/utilisateurs/${nom}/contrats`)
+         window.location.assign(`http://localhost:3000/utilisateurs/${nom}/contrats`)
     }
     return (
 
@@ -95,12 +95,6 @@ const PageCreerContrat = ({fetchContratsParNom, estAjoute, ajouterContrat, contr
             <Header text={nom} color={"pink"}></Header>
             <Box m="auto" width="600px" mt={5} boxShadow='outline' p='6' rounded='md' bg='white' mb={5}>
                 <form onSubmit={onSubmit}>
-                    {
-                        estAjoute ?
-                            <Box>Contrat est ajouté !!!!</Box>
-                            :
-                            <Box></Box>
-                    }
                     <FormControl isInvalid={estErreur} isRequired>
                         <FormLabel m={3}>Nom Client: </FormLabel>
                         <Input width={400} m={3} min={2} type="text" placeholder={'nom'} value={nomClient}
@@ -140,6 +134,9 @@ const PageCreerContrat = ({fetchContratsParNom, estAjoute, ajouterContrat, contr
                                                 <Radio size='sm' value='6'>6 mois</Radio>
                                                 <Radio size='sm' value='12'>12 mois</Radio>
                                             </Stack>
+                                            {
+                                                mois == "" ? <Box color="red">Au moins un mois doit être ajouté</Box> : <Box></Box>
+                                            }
                                         </RadioGroup>
                                     </AlertDialogBody>
 
@@ -184,7 +181,6 @@ const PageCreerContrat = ({fetchContratsParNom, estAjoute, ajouterContrat, contr
                                                                                            width={200}>Retourner</Button></Link>
                 </form>
             </Box>
-
         </Box>
 
     )
