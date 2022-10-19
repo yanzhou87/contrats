@@ -18,18 +18,12 @@ import java.util.List;
 public class ContratController {
 
     Logger logger = LoggerFactory.getLogger(ContratController.class);
-
     private ServiceContrat serviceContrat;
     private ServiceUtilisateur serviceUtilisateur;
 
     public ContratController(ServiceContrat serviceContrat, ServiceUtilisateur serviceUtilisateur) {
         this.serviceContrat = serviceContrat;
         this.serviceUtilisateur = serviceUtilisateur;
-    }
-
-    @GetMapping("/clients")
-    public ResponseEntity<List<ContratDTO>> getAllContrat() {
-        return new ResponseEntity<>(serviceContrat.getAllContrats(), HttpStatus.OK);
     }
 
     @GetMapping("/utilisateurs/{nom}/contrats")

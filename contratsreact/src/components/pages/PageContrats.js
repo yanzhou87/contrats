@@ -59,7 +59,7 @@ const PageContrats= ({fetchContratsParNom,  contrats, fetchContratsParNomClient}
                     <TableCaption>......</TableCaption>
                     <Thead>
                     <Tr>
-                        <Th>Nombre</Th>
+                        <Th>Id</Th>
                         <Th>Nom du client</Th>
                         <Th>Date d'expiration</Th>
                     </Tr>

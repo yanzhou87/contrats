@@ -58,16 +58,16 @@ const PageContratsExpirants = ({contratsExpirants,fetchContratsContratsExpirants
                     <TableCaption>......</TableCaption>
                     <Thead>
                         <Tr>
-                            <Th>RappelDePaiement</Th>
                             <Th>Nom du client</Th>
+                            <Th>Date début</Th>
                             <Th isNumeric>Date d'expiration</Th>
                         </Tr>
                     </Thead>
                     <Tbody>
                         {contratsExpirants.map((contrat) => (
                             <Tr  key={contrat.id}>
-                                <Td><Link href={`http://localhost:3000/utilisateurs/${nom}/contrats/${contrat.id}`}>{ contrat.rappelDePaiement ? "True" : "False"} </Link></Td>
-                                <Td><Link href={`http://localhost:3000/utilisateurs/${nom}/contrats/${contrat.id}`} >{ contrat.nomClient }</Link></Td>
+                                <Td><Link href={`http://localhost:3000/utilisateurs/${nom}/contrats/${contrat.id}`}>{ contrat.nomClient } </Link></Td>
+                                <Td><Link href={`http://localhost:3000/utilisateurs/${nom}/contrats/${contrat.id}`} >{ contrat.dateDebut }</Link></Td>
                                 <Td isNumeric><Link href={`http://localhost:3000/utilisateurs/${nom}/contrats/${contrat.id}`}>{ contrat.dateFin }</Link></Td>
                             </Tr>
                         ))}
