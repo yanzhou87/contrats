@@ -1,5 +1,5 @@
 import {CloseIcon, StarIcon} from "@chakra-ui/icons";
-import {Button, Heading, Link, Stack} from "@chakra-ui/react";
+import {Heading, Link, Stack} from "@chakra-ui/react";
 
 const Header = ({ w, h, text, color }) => {
     return (

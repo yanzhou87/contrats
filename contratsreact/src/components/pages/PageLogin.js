@@ -44,7 +44,7 @@ const PageLogin = ({fetchUtilisateur, estLogin, setSuccesInscription, estErreurP
                         )}
                         {estErreurPourNom ? (
                             <FormHelperText m={3} color='red'>
-                                Le mot ne peut pas être vide
+                                Le nom ne peut pas être vide
                             </FormHelperText>
                         ) : (
                             <FormHelperText m={3}></FormHelperText>
